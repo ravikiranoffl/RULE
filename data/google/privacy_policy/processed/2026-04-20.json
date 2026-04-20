@@ -1,0 +1,12 @@
+{
+  "date": "2026-04-20",
+  "entity": "Google",
+  "document": "privacy_policy",
+  "summary": "Minor update to data usage language",
+  "change_type": "modification",
+  "risk_level": "low",
+  "topics": [
+    "data_usage"
+  ],
+  "user_impact": "Minimal impact on users"
+}
