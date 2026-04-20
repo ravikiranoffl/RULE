@@ -2,30 +2,51 @@ name: RULE Google Tracker
 
 on:
   schedule:
-    - cron: "0 2 * * *"
+    - cron: "0 2 * * *"   
   workflow_dispatch:
+
+permissions:
+  contents: write   
 
 jobs:
   run:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+     
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: "3.11"
 
-      - run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-      - run: python scripts/fetch.py
-      - run: python scripts/diff.py
-      - run: python scripts/analyze.py
+      - name: Fetch data
+        run: python scripts/fetch.py
 
-      - name: Commit data
+      - name: Run diff
+        run: python scripts/diff.py
+
+    
+      - name: Analyze changes
+        run: python scripts/analyze.py
+
+      - name: Clean cache files
+        run: |
+          find . -type d -name "__pycache__" -exec rm -rf {} +
+          find . -type f -name "*.pyc" -delete
+
+      - name: Commit and push
         run: |
           git config --global user.name "rule-bot"
           git config --global user.email "bot@rule.ai"
+
           git add .
-          git commit -m "RULE update" || echo "No changes"
-          git push
+
+          git commit -m "RULE update $(date -u +'%Y-%m-%d')" || echo "No changes to commit"
+
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
