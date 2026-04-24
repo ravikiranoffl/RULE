@@ -2,6 +2,7 @@ name: RULE Google Tracker
 
 on:
   schedule:
+    # Runs at 2:00 AM UTC (7:30 AM IST)
     - cron: "0 2 * * *"   
   workflow_dispatch:
 
@@ -13,17 +14,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "requirements.txt not found, skipping install"
+          fi
 
       - name: Fetch data
         run: python scripts/fetch.py
@@ -31,7 +36,6 @@ jobs:
       - name: Run diff
         run: python scripts/diff.py
 
-    
       - name: Analyze changes
         run: python scripts/analyze.py
 
@@ -43,10 +47,11 @@ jobs:
       - name: Commit and push
         run: |
           git config --global user.name "rule-bot"
-          git config --global user.email "bot@rule.ai"
+          git config --global user.email "143505051+masterrkoffl@users.noreply.github.com"
 
           git add .
 
-          git commit -m "RULE-$(date -u +'%Y-%m-%d')" || echo "No changes to commit"
+          git commit -m "RULE-$(date -u +'%Y-%m-%d')" -m "Co-authored-by: ravikiranoffl <171322216+ravikiranoffl@users.noreply.github.com>" || echo "No changes to commit"
 
+          # 3. Secure Push using GITHUB_TOKEN
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
