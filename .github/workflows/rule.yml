@@ -51,7 +51,7 @@ jobs:
 
           git add .
 
-          git commit -m "RULE-$(date -u +'%Y-%m-%d')" -m "Co-authored-by: ravikiranoffl <171322216+ravikiranoffl@users.noreply.github.com>" || echo "No changes to commit"
+          git commit -m "RULE$(date -u +'%Y%m%d')A1" -m "Co-authored-by: ravikiranoffl <171322216+ravikiranoffl@users.noreply.github.com>" || echo "No changes to commit"
 
           # 3. Secure Push using GITHUB_TOKEN
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
