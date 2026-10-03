@@ -1,0 +1,20 @@
+--- 
++++ 
+@@ -49,7 +49,7 @@
+ Privacy Checkup
+ Looking to change your privacy settings?
+ Take the Privacy Checkup
+-Effective May 26, 2026
++Effective October 1, 2026
+ |
+ Archived versions
+ |
+@@ -89,7 +89,7 @@
+ unique identifiers
+ tied to the browser, application, or
+ device
+-you’re using. This allows us to do things like maintain your preferences across browsing sessions, such as your preferred language or whether to show you more relevant search results or ads based on your activity.
++you’re using. This allows us to do things like maintain your preferences across browsing sessions, such as your preferred language or whether to show you more relevant search results or ads based on your activity across devices.
+ When you’re signed in, we also collect information that we store with your Google Account, which we treat as
+ personal information
+ .
